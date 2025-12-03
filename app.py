@@ -19,8 +19,6 @@ Dependências:
 - matplotlib
 - pillow
 
-Instale com: pip install streamlit pandas matplotlib pillow
-
 Descrição:
 - App com navegação via sidebar
 - CRUD para receitas (com upload de imagem)
@@ -32,7 +30,6 @@ Descrição:
 
 Observação: imagens são salvas na pasta ./uploads e o caminho salvo no DB.
 """
-
 import streamlit as st
 import sqlite3
 import os
@@ -370,4 +367,5 @@ elif page == "Exportar / Backup":
 
 # ---------------------- FOOTER ----------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por sua dupla — personalize o tema, imagens e funcionalidades.</div>", unsafe_allow_html=True)
+
 
