@@ -1,5 +1,4 @@
 # app.py - CookieHub Streamlit App
-# Salve na raiz do repositório
 # Dependências: streamlit, pandas, matplotlib, pillow
 
 import streamlit as st
