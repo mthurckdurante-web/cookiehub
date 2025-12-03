@@ -1,3 +1,13 @@
+import subprocess
+import sys
+
+subprocess.check_call([sys.executable, "-m", "pip", "install", "matplotlib"])
+import matplotlib.pyplot as plt
+
+
+
+
+
 """
 CookieHub - Aplicação Streamlit completa (arquivo único)
 Salve como: app.py
@@ -360,3 +370,4 @@ elif page == "Exportar / Backup":
 
 # ---------------------- FOOTER ----------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por sua dupla — personalize o tema, imagens e funcionalidades.</div>", unsafe_allow_html=True)
+
