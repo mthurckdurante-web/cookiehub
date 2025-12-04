@@ -137,48 +137,72 @@ if page == "Home":
 # ------------------ RECEITAS ------------------
 elif page == "Receitas":
     st.header("🍪 Receitas Cadastradas")
-    # JANELA DE CONFIRMAÇÃO DE EXCLUSÃO
-if 'delete_id' in st.session_state:
-    st.warning(f"Tem certeza que deseja excluir a receita *{st.session_state['delete_nome']}* ?")
-    colc1, colc2 = st.columns(2)
 
-    with colc1:
-        if st.button("✅ Sim, excluir"):
-            delete_recipe(st.session_state['delete_id'])
-            del st.session_state['delete_id']
-            del st.session_state['delete_nome']
-            st.success("Receita excluída com sucesso!")
-            st.experimental_rerun()
+    # JANELA DE CONFIRMAÇÃO DE EXCLUSÃO (se houver algo pendente)
+    if 'delete_id' in st.session_state:
+        st.warning(
+            f"Tem certeza que deseja excluir a receita *{st.session_state['delete_nome']}*?"
+        )
+        colc1, colc2 = st.columns(2)
 
-    with colc2:
-        if st.button("❌ Cancelar"):
-            del st.session_state['delete_id']
-            del st.session_state['delete_nome']
-            st.info("Exclusão cancelada.")
-            st.experimental_rerun()
+        with colc1:
+            if st.button("✅ Sim, excluir"):
+                delete_recipe(st.session_state['delete_id'])
+                del st.session_state['delete_id']
+                del st.session_state['delete_nome']
+                st.success("Receita excluída com sucesso!")
+                st.experimental_rerun()
+
+        with colc2:
+            if st.button("❌ Cancelar"):
+                del st.session_state['delete_id']
+                del st.session_state['delete_nome']
+                st.info("Exclusão cancelada.")
+                st.experimental_rerun()
+
+    # CARREGAR RECEITAS DO BANCO
     df = get_recipes_df()
+
     if df.empty:
         st.info("Nenhuma receita cadastrada ainda. Vá em 'Nova Receita' para adicionar.")
     else:
         for _, row in df.sort_values('id', ascending=False).iterrows():
-            cols = st.columns([1,2,1])
+            cols = st.columns([1, 2, 1])
+
+            # Coluna da imagem
             with cols[0]:
                 if row['imagem_path'] and os.path.exists(row['imagem_path']):
                     st.image(row['imagem_path'], use_column_width=True, caption=row['nome'])
                 else:
-                    st.image("fotos/cookie.jfif", use_column_width=True)
+                    # imagem padrão se não houver
+                    st.image("sem_imagem.png", use_column_width=True)
+
+            # Coluna do texto
             with cols[1]:
-                st.markdown(f"<div class='card'><h3>{row['nome']}  <span class='small'>R$ {row['preco']:.2f}</span></h3>", unsafe_allow_html=True)
-                st.markdown(f"<p><strong>Ingredientes:</strong><br>{row['ingredientes']}</p>", unsafe_allow_html=True)
-                st.markdown(f"<p><strong>Modo de preparo:</strong><br>{row['preparo']}</p></div>", unsafe_allow_html=True)
+                st.markdown(
+                    f"<div class='card'><h3>{row['nome']}  "
+                    f"<span class='small'>R$ {row['preco']:.2f}</span></h3>",
+                    unsafe_allow_html=True
+                )
+                st.markdown(
+                    f"<p><strong>Ingredientes:</strong><br>{row['ingredientes']}</p>",
+                    unsafe_allow_html=True
+                )
+                st.markdown(
+                    f"<p><strong>Modo de preparo:</strong><br>{row['preparo']}</p></div>",
+                    unsafe_allow_html=True
+                )
+
+            # Coluna dos botões
             with cols[2]:
                 if st.button(f"Editar ✏️", key=f"edit_{row['id']}"):
                     st.session_state['edit_id'] = int(row['id'])
                     st.experimental_rerun()
+
                 if st.button(f"Excluir 🗑️", key=f"del_{row['id']}"):
-                  st.session_state['delete_id'] = int(row['id'])
-    st.session_state['delete_nome'] = row['nome']
-    st.experimental_rerun()
+                    st.session_state['delete_id'] = int(row['id'])
+                    st.session_state['delete_nome'] = row['nome']
+                    st.experimental_rerun()
 # ------------------ NOVA RECEITA ------------------
 elif page == "Nova Receita":
     st.header("➕ Adicionar / Editar Receita")
@@ -285,6 +309,7 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
