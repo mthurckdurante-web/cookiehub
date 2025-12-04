@@ -119,7 +119,7 @@ def add_sale(receita_id, quantidade, preco_unitario, data):
     conn.commit()
 
 # ------------------ SIDEBAR ------------------
-st.sidebar.image("https://i.imgur.com/zk2JQ.png", width=140)
+st.sidebar.image"cookie.jfif", width=140)
 st.sidebar.markdown("---")
 page = st.sidebar.selectbox("Navegação", ["Home", "Receitas", "Nova Receita", "Registrar Venda", "Relatórios / Consultas", "Exportar / Backup"]) 
 
@@ -268,3 +268,4 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
