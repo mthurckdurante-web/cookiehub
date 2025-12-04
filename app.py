@@ -125,7 +125,7 @@ page = st.sidebar.selectbox("Navegação", ["Home", "Receitas", "Nova Receita", 
 
 # ------------------ HOME ------------------
 # ------------------ HOME ------------------
-elif page == "Home":
+if page == "Home":
     st.markdown(
         "<div class='header'><div class='title'>🍪 CookieHub</div>"
         "<div class='subtitle'>Gerencie receitas, vendas e relatórios</div></div>",
@@ -373,6 +373,7 @@ elif page == "Exportar / Backup":
         st.rerun()
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
