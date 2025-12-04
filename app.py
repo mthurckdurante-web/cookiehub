@@ -151,14 +151,14 @@ elif page == "Receitas":
                 del st.session_state['delete_id']
                 del st.session_state['delete_nome']
                 st.success("Receita excluída com sucesso!")
-                st.experimental_rerun()
+                st.rerun()
 
         with colc2:
             if st.button("❌ Cancelar"):
                 del st.session_state['delete_id']
                 del st.session_state['delete_nome']
                 st.info("Exclusão cancelada.")
-                st.experimental_rerun()
+                st.rerun()
 
     # CARREGAR RECEITAS DO BANCO
     df = get_recipes_df()
@@ -197,12 +197,12 @@ elif page == "Receitas":
             with cols[2]:
                 if st.button(f"Editar ✏️", key=f"edit_{row['id']}"):
                     st.session_state['edit_id'] = int(row['id'])
-                    st.experimental_rerun()
+                    st.rerun()
 
                 if st.button(f"Excluir 🗑️", key=f"del_{row['id']}"):
                     st.session_state['delete_id'] = int(row['id'])
                     st.session_state['delete_nome'] = row['nome']
-                    st.experimental_rerun()
+                    st.rerun()
 # ------------------ NOVA RECEITA ------------------
 elif page == "Nova Receita":
     st.header("➕ Adicionar / Editar Receita")
@@ -233,7 +233,7 @@ elif page == "Nova Receita":
                 else:
                     add_recipe(nome, ingredientes, preparo, path, preco)
                     st.success("Receita adicionada com sucesso!")
-                st.experimental_rerun()
+                st.rerun()
 
 # ------------------ REGISTRAR VENDA ------------------
 elif page == "Registrar Venda":
@@ -254,7 +254,7 @@ elif page == "Registrar Venda":
             if submitted:
                 add_sale(receita_id, int(quantidade), float(preco_unitario), str(data_venda))
                 st.success("Venda registrada com sucesso!")
-                st.experimental_rerun()
+                st.rerun()
 
 # ------------------ RELATÓRIOS ------------------
 elif page == "Relatórios / Consultas":
@@ -305,10 +305,11 @@ elif page == "Exportar / Backup":
             cur.execute("DELETE FROM receitas")
             conn.commit()
             st.success("Aplicação resetada. Recarregue a página.")
-            st.experimental_rerun()
+            st.rerun()
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
