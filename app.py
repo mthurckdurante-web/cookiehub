@@ -157,11 +157,11 @@ elif page == "Receitas":
                     st.session_state['edit_id'] = int(row['id'])
                     st.experimental_rerun()
                 if st.button(f"Excluir 🗑️", key=f"del_{row['id']}"):
-                    if st.confirm(f"Tem certeza que quer excluir a receita '{row['nome']}'?"):
-                        delete_recipe(row['id'])
-                        st.success("Receita excluída")
-                        st.experimental_rerun()
-
+                    AttributeError: This app has encountered an error. The original error message is redacted to prevent data leaks. Full error details have been recorded in the logs (if you're on Streamlit Cloud, click on 'Manage app' in the lower right of your app).
+Traceback:
+File "/mount/src/cookiehub/app.py", line 160, in <module>
+    if st.confirm(f"Tem certeza que quer excluir a receita '{row['nome']}'?"):
+       ^^^^^^^^^^
 # ------------------ NOVA RECEITA ------------------
 elif page == "Nova Receita":
     st.header("➕ Adicionar / Editar Receita")
@@ -268,6 +268,7 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
