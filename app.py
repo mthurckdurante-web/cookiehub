@@ -124,48 +124,62 @@ st.sidebar.markdown("---")
 page = st.sidebar.selectbox("Navegação", ["Home", "Receitas", "Nova Receita", "Registrar Venda", "Relatórios / Consultas", "Exportar / Backup"]) 
 
 # ------------------ HOME ------------------
-st.markdown(
-        "<div class='header'><div class='title'>🍪 CookieHub</div><div class='subtitle'>Gerencie receitas, vendas e relatórios</div></div>",
+# ------------------ HOME ------------------
+if page == "Home":
+    st.markdown(
+        "<div class='header'><div class='title'>🍪 CookieHub</div>"
+        "<div class='subtitle'>Gerencie receitas, vendas e relatórios</div></div>",
         unsafe_allow_html=True
     )
 
-    # imagem de capa
+    # IMAGEM PRINCIPAL DA HOME
     st.image(
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr6cuGw8s6A8H73LzL8tQWRz60fYqJGpDe3g&s",
         use_column_width=True
     )
 
     col1, col2 = st.columns([2, 1])
+
     with col1:
-        st.markdown("<div class='card fade-in'> <h3>O que você pode fazer</h3><ul><li>Cadastrar receitas</li><li>Registrar vendas</li><li>Editar/excluir receitas</li><li>Visualizar relatórios</li></ul></div>", unsafe_allow_html=True)
+        st.markdown(
+            "<div class='card fade-in'> <h3>O que você pode fazer</h3>"
+            "<ul><li>Cadastrar receitas</li><li>Registrar vendas</li>"
+            "<li>Editar/excluir receitas</li><li>Visualizar relatórios</li></ul></div>",
+            unsafe_allow_html=True
+        )
+
     with col2:
         df_rec = get_recipes_df()
         df_sales = get_sales_df()
-        st.markdown(f"<div class='card'><h4>Estatísticas rápidas</h4>Receitas: {len(df_rec)}<br>Vendas: {len(df_sales)}</div>", unsafe_allow_html=True)
+        st.markdown(
+            f"<div class='card'><h4>Estatísticas rápidas</h4>"
+            f"Receitas: {len(df_rec)}<br>Vendas: {len(df_sales)}</div>",
+            unsafe_allow_html=True
+        )
 
 # ------------------ RECEITAS ------------------
 elif page == "Receitas":
     st.header("🍪 Receitas Cadastradas")
 
     # JANELA DE CONFIRMAÇÃO DE EXCLUSÃO (se houver algo pendente)
-    if 'delete_id' in st.session_state:
+    if "delete_id" in st.session_state:
         st.warning(
-            f"Tem certeza que deseja excluir a receita *{st.session_state['delete_nome']}*?"
+            f"Tem certeza que deseja excluir a receita **{st.session_state['delete_nome']}**?"
         )
         colc1, colc2 = st.columns(2)
 
         with colc1:
             if st.button("✅ Sim, excluir"):
-                delete_recipe(st.session_state['delete_id'])
-                del st.session_state['delete_id']
-                del st.session_state['delete_nome']
+                delete_recipe(st.session_state["delete_id"])
+                del st.session_state["delete_id"]
+                del st.session_state["delete_nome"]
                 st.success("Receita excluída com sucesso!")
                 st.rerun()
 
         with colc2:
             if st.button("❌ Cancelar"):
-                del st.session_state['delete_id']
-                del st.session_state['delete_nome']
+                del st.session_state["delete_id"]
+                del st.session_state["delete_nome"]
                 st.info("Exclusão cancelada.")
                 st.rerun()
 
@@ -175,60 +189,81 @@ elif page == "Receitas":
     if df.empty:
         st.info("Nenhuma receita cadastrada ainda. Vá em 'Nova Receita' para adicionar.")
     else:
-        for _, row in df.sort_values('id', ascending=False).iterrows():
+        for _, row in df.sort_values("id", ascending=False).iterrows():
             cols = st.columns([1, 2, 1])
 
             # Coluna da imagem
             with cols[0]:
-                if row['imagem_path'] and os.path.exists(row['imagem_path']):
-                    st.image(row['imagem_path'], use_column_width=True, caption=row['nome'])
+                if row["imagem_path"] and os.path.exists(row["imagem_path"]):
+                    st.image(row["imagem_path"], use_column_width=True, caption=row["nome"])
                 else:
                     # imagem padrão se não houver
-                    st.image("https://mojo.generalmills.com/api/public/content/_pLFRXFETcuXWg_Z0MhZPw_webp_base.webp?v=1c273e93&t=191ddcab8d1c415fa10fa00a14351227", use_column_width=True)
+                    st.image(
+                        "https://via.placeholder.com/300x200.png?text=Sem+imagem",
+                        use_column_width=True,
+                    )
 
             # Coluna do texto
             with cols[1]:
                 st.markdown(
                     f"<div class='card'><h3>{row['nome']}  "
                     f"<span class='small'>R$ {row['preco']:.2f}</span></h3>",
-                    unsafe_allow_html=True
+                    unsafe_allow_html=True,
                 )
                 st.markdown(
                     f"<p><strong>Ingredientes:</strong><br>{row['ingredientes']}</p>",
-                    unsafe_allow_html=True
+                    unsafe_allow_html=True,
                 )
                 st.markdown(
                     f"<p><strong>Modo de preparo:</strong><br>{row['preparo']}</p></div>",
-                    unsafe_allow_html=True
+                    unsafe_allow_html=True,
                 )
 
             # Coluna dos botões
             with cols[2]:
                 if st.button(f"Editar ✏️", key=f"edit_{row['id']}"):
-                    st.session_state['edit_id'] = int(row['id'])
+                    st.session_state["edit_id"] = int(row["id"])
                     st.rerun()
 
                 if st.button(f"Excluir 🗑️", key=f"del_{row['id']}"):
-                    st.session_state['delete_id'] = int(row['id'])
-                    st.session_state['delete_nome'] = row['nome']
+                    st.session_state["delete_id"] = int(row["id"])
+                    st.session_state["delete_nome"] = row["nome"]
                     st.rerun()
+
 # ------------------ NOVA RECEITA ------------------
 elif page == "Nova Receita":
     st.header("➕ Adicionar / Editar Receita")
     edit_mode = False
-    edit_id = st.session_state.get('edit_id', None)
+    edit_id = st.session_state.get("edit_id", None)
     edit_row = None
     if edit_id:
-        edit_row = cur.execute("SELECT id, nome, ingredientes, preparo, imagem_path, preco FROM receitas WHERE id=?", (edit_id,)).fetchone()
+        edit_row = cur.execute(
+            "SELECT id, nome, ingredientes, preparo, imagem_path, preco FROM receitas WHERE id=?",
+            (edit_id,),
+        ).fetchone()
         if edit_row:
             edit_mode = True
             st.info(f"Editando receita: {edit_row[1]}")
+
     with st.form("recipe_form", clear_on_submit=False):
         nome = st.text_input("Nome", value=edit_row[1] if edit_mode else "")
-        preco = st.number_input("Preço unitário (R$)", min_value=0.0, value=float(edit_row[5]) if edit_mode else 0.0, step=0.5)
-        ingredientes = st.text_area("Ingredientes (separe por vírgula)", value=edit_row[2] if edit_mode else "")
-        preparo = st.text_area("Modo de preparo", value=edit_row[3] if edit_mode else "")
-        imagem = st.file_uploader("Imagem da receita (png/jpg)", type=["png","jpg","jpeg"], key="img_up")
+        preco = st.number_input(
+            "Preço unitário (R$)",
+            min_value=0.0,
+            value=float(edit_row[5]) if edit_mode else 0.0,
+            step=0.5,
+        )
+        ingredientes = st.text_area(
+            "Ingredientes (separe por vírgula)",
+            value=edit_row[2] if edit_mode else "",
+        )
+        preparo = st.text_area(
+            "Modo de preparo",
+            value=edit_row[3] if edit_mode else "",
+        )
+        imagem = st.file_uploader(
+            "Imagem da receita (png/jpg)", type=["png", "jpg", "jpeg"], key="img_up"
+        )
         submitted = st.form_submit_button("Salvar")
         if submitted:
             path = save_image(imagem) if imagem else (edit_row[4] if edit_mode else None)
@@ -238,7 +273,7 @@ elif page == "Nova Receita":
                 if edit_mode:
                     update_recipe(edit_id, nome, ingredientes, preparo, path, preco)
                     st.success("Receita atualizada com sucesso!")
-                    del st.session_state['edit_id']
+                    del st.session_state["edit_id"]
                 else:
                     add_recipe(nome, ingredientes, preparo, path, preco)
                     st.success("Receita adicionada com sucesso!")
@@ -252,12 +287,17 @@ elif page == "Registrar Venda":
         st.info("Cadastre uma receita antes de registrar vendas.")
     else:
         with st.form("sale_form"):
-            receita_map = {f"{r['id']} - {r['nome']}": r['id'] for _, r in df.iterrows()}
+            receita_map = {f"{r['id']} - {r['nome']}": r["id"] for _, r in df.iterrows()}
             escolha = st.selectbox("Escolha a receita", list(receita_map.keys()))
             quantidade = st.number_input("Quantidade", min_value=1, value=1)
             receita_id = receita_map[escolha]
-            preco_default = float(cur.execute("SELECT preco FROM receitas WHERE id=?", (receita_id,)).fetchone()[0] or 0)
-            preco_unitario = st.number_input("Preço unitário (R$)", min_value=0.0, value=preco_default, step=0.5)
+            preco_default = float(
+                cur.execute("SELECT preco FROM receitas WHERE id=?", (receita_id,)).fetchone()[0]
+                or 0
+            )
+            preco_unitario = st.number_input(
+                "Preço unitário (R$)", min_value=0.0, value=preco_default, step=0.5
+            )
             data_venda = st.date_input("Data da venda", value=datetime.today())
             submitted = st.form_submit_button("Registrar Venda")
             if submitted:
@@ -276,14 +316,18 @@ elif page == "Relatórios / Consultas":
         else:
             st.subheader("Vendas recentes")
             st.dataframe(sales_df)
-            resumo = sales_df.groupby('receita').agg({'quantidade':'sum','total':'sum'}).reset_index()
+            resumo = (
+                sales_df.groupby("receita")
+                .agg({"quantidade": "sum", "total": "sum"})
+                .reset_index()
+            )
             st.subheader("Resumo por receita")
             st.dataframe(resumo)
-            fig, ax = plt.subplots(figsize=(8,4))
-            ax.bar(resumo['receita'], resumo['total'])
-            ax.set_title('Receita total por receita (R$)')
-            ax.set_ylabel('Total (R$)')
-            ax.set_xticklabels(resumo['receita'], rotation=45, ha='right')
+            fig, ax = plt.subplots(figsize=(8, 4))
+            ax.bar(resumo["receita"], resumo["total"])
+            ax.set_title("Receita total por receita (R$)")
+            ax.set_ylabel("Total (R$)")
+            ax.set_xticklabels(resumo["receita"], rotation=45, ha="right")
             st.pyplot(fig)
     with tab2:
         rec_df = get_recipes_df()
@@ -293,31 +337,40 @@ elif page == "Relatórios / Consultas":
             st.subheader("Receitas")
             st.dataframe(rec_df)
             if st.button("Exportar receitas como CSV"):
-                csv = rec_df.to_csv(index=False).encode('utf-8')
-                st.download_button("Clique para baixar CSV", data=csv, file_name='receitas.csv', mime='text/csv')
+                csv = rec_df.to_csv(index=False).encode("utf-8")
+                st.download_button(
+                    "Clique para baixar CSV",
+                    data=csv,
+                    file_name="receitas.csv",
+                    mime="text/csv",
+                )
 
 # ------------------ EXPORTAR / BACKUP ------------------
 elif page == "Exportar / Backup":
     st.header("💾 Exportar / Backup")
     if st.button("Baixar arquivo SQLite (.db)"):
-        with open(DB_PATH, 'rb') as f:
+        with open(DB_PATH, "rb") as f:
             data = f.read()
-        st.download_button("Download do DB", data=data, file_name='cookiehub.db', mime='application/octet-stream')
+        st.download_button(
+            "Download do DB",
+            data=data,
+            file_name="cookiehub.db",
+            mime="application/octet-stream",
+        )
     st.markdown("---")
     if st.button("Resetar aplicação (apagar receitas e vendas)"):
-        if st.confirm("Tem certeza? Esta ação apagará todas as receitas e vendas e removerá imagens salvas."):
-            df = get_recipes_df()
-            for p in df['imagem_path'].dropna().tolist():
-                if p and os.path.exists(p):
-                    os.remove(p)
-            cur.execute("DELETE FROM vendas")
-            cur.execute("DELETE FROM receitas")
-            conn.commit()
-            st.success("Aplicação resetada. Recarregue a página.")
-            st.rerun()
-
+        df = get_recipes_df()
+        for p in df["imagem_path"].dropna().tolist():
+            if p and os.path.exists(p):
+                os.remove(p)
+        cur.execute("DELETE FROM vendas")
+        cur.execute("DELETE FROM receitas")
+        conn.commit()
+        st.success("Aplicação resetada. Recarregue a página.")
+        st.rerun()
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
