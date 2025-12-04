@@ -143,6 +143,7 @@ if page == "Home":
     with col1:
     st.markdown(
         "<h3>O que você pode fazer</h3>"
+        "<ul>"
         "<ul><li>Cadastrar receitas</li><li>Registrar vendas</li>"
         "<li>Editar/excluir receitas</li><li>Visualizar relatórios</li></ul>",
         unsafe_allow_html=True
@@ -369,6 +370,7 @@ elif page == "Exportar / Backup":
         st.rerun()
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
