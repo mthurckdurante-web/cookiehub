@@ -125,7 +125,7 @@ page = st.sidebar.selectbox("Navegação", ["Home", "Receitas", "Nova Receita", 
 
 # ------------------ HOME ------------------
 # ------------------ HOME ------------------
-if page == "Home":
+elif page == "Home":
     st.markdown(
         "<div class='header'><div class='title'>🍪 CookieHub</div>"
         "<div class='subtitle'>Gerencie receitas, vendas e relatórios</div></div>",
@@ -141,22 +141,25 @@ if page == "Home":
     col1, col2 = st.columns([2, 1])
 
     with col1:
-    st.markdown(
-        "<h3>O que você pode fazer</h3>"
-        "<ul>"
-        "<ul><li>Cadastrar receitas</li><li>Registrar vendas</li>"
-        "<li>Editar/excluir receitas</li><li>Visualizar relatórios</li></ul>",
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            "<h3>O que você pode fazer</h3>"
+            "<ul>"
+            "<li>Cadastrar receitas</li>"
+            "<li>Registrar vendas</li>"
+            "<li>Editar/excluir receitas</li>"
+            "<li>Visualizar relatórios</li>"
+            "</ul>",
+            unsafe_allow_html=True
+        )
 
-with col2:
-    df_rec = get_recipes_df()
-    df_sales = get_sales_df()
-    st.markdown(
-        f"<h4>Estatísticas rápidas</h4>"
-        f"Receitas: {len(df_rec)}<br>Vendas: {len(df_sales)}",
-        unsafe_allow_html=True
-    )
+    with col2:
+        df_rec = get_recipes_df()
+        df_sales = get_sales_df()
+        st.markdown(
+            f"<h4>Estatísticas rápidas</h4>"
+            f"Receitas: {len(df_rec)}<br>Vendas: {len(df_sales)}",
+            unsafe_allow_html=True
+        )
 # ------------------ RECEITAS ------------------
 elif page == "Receitas":
     st.header("🍪 Receitas Cadastradas")
@@ -370,6 +373,7 @@ elif page == "Exportar / Backup":
         st.rerun()
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
