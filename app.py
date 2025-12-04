@@ -11,8 +11,8 @@ from PIL import Image
 import uuid
 
 # ------------------ CONFIG ------------------
-st.set_page_config(page_title="CookieHub", page_icon="🍪", layout="wide")
-DB_PATH = "cookiehub.db"
+st.set_page_config(page_title="Cookie Delícia", page_icon="🍪", layout="wide")
+DB_PATH = "cookiedelícia.db"
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
@@ -127,7 +127,7 @@ page = st.sidebar.selectbox("Navegação", ["Home", "Receitas", "Nova Receita", 
 # ------------------ HOME ------------------
 if page == "Home":
     st.markdown(
-        "<div class='header'><div class='title'>🍪 CookieHub</div>"
+        "<div class='header'><div class='title'>🍪Cookie Delícia </div>"
         "<div class='subtitle'>Gerencie receitas, vendas e relatórios</div></div>",
         unsafe_allow_html=True
     )
@@ -373,6 +373,7 @@ elif page == "Exportar / Backup":
         st.rerun()
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
