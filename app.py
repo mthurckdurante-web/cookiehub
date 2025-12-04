@@ -147,7 +147,7 @@ elif page == "Receitas":
                 if row['imagem_path'] and os.path.exists(row['imagem_path']):
                     st.image(row['imagem_path'], use_column_width=True, caption=row['nome'])
                 else:
-                    st.image("https://via.placeholder.com/300x200.png?text=Sem+imagem", use_column_width=True)
+                    st.image("fotos/cookie.jfif", use_column_width=True)
             with cols[1]:
                 st.markdown(f"<div class='card'><h3>{row['nome']}  <span class='small'>R$ {row['preco']:.2f}</span></h3>", unsafe_allow_html=True)
                 st.markdown(f"<p><strong>Ingredientes:</strong><br>{row['ingredientes']}</p>", unsafe_allow_html=True)
@@ -268,6 +268,7 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
