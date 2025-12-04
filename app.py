@@ -175,7 +175,7 @@ elif page == "Receitas":
                     st.image(row['imagem_path'], use_column_width=True, caption=row['nome'])
                 else:
                     # imagem padrão se não houver
-                    st.image("sem_imagem.png", use_column_width=True)
+                    st.image("cookie.jfif", use_column_width=True)
 
             # Coluna do texto
             with cols[1]:
@@ -309,6 +309,7 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
