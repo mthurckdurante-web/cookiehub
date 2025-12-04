@@ -175,7 +175,7 @@ elif page == "Receitas":
                     st.image(row['imagem_path'], use_column_width=True, caption=row['nome'])
                 else:
                     # imagem padrão se não houver
-                    st.image("images/cookie.jfif", use_column_width=True)
+                    st.image("https://mojo.generalmills.com/api/public/content/_pLFRXFETcuXWg_Z0MhZPw_webp_base.webp?v=1c273e93&t=191ddcab8d1c415fa10fa00a14351227", use_column_width=True)
 
             # Coluna do texto
             with cols[1]:
@@ -309,6 +309,7 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
