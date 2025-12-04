@@ -137,6 +137,25 @@ if page == "Home":
 # ------------------ RECEITAS ------------------
 elif page == "Receitas":
     st.header("🍪 Receitas Cadastradas")
+    # JANELA DE CONFIRMAÇÃO DE EXCLUSÃO
+if 'delete_id' in st.session_state:
+    st.warning(f"Tem certeza que deseja excluir a receita *{st.session_state['delete_nome']}* ?")
+    colc1, colc2 = st.columns(2)
+
+    with colc1:
+        if st.button("✅ Sim, excluir"):
+            delete_recipe(st.session_state['delete_id'])
+            del st.session_state['delete_id']
+            del st.session_state['delete_nome']
+            st.success("Receita excluída com sucesso!")
+            st.experimental_rerun()
+
+    with colc2:
+        if st.button("❌ Cancelar"):
+            del st.session_state['delete_id']
+            del st.session_state['delete_nome']
+            st.info("Exclusão cancelada.")
+            st.experimental_rerun()
     df = get_recipes_df()
     if df.empty:
         st.info("Nenhuma receita cadastrada ainda. Vá em 'Nova Receita' para adicionar.")
@@ -266,6 +285,7 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
