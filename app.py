@@ -124,12 +124,18 @@ st.sidebar.markdown("---")
 page = st.sidebar.selectbox("Navegação", ["Home", "Receitas", "Nova Receita", "Registrar Venda", "Relatórios / Consultas", "Exportar / Backup"]) 
 
 # ------------------ HOME ------------------
-if page == "Home":
-    st.markdown("<div class='header'><div class='title'>🍪 CookieHub</div><div class='subtitle'>Gerencie receitas, vendas e relatórios</div></div>", unsafe_allow_html=True)
-   st.image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr6cuGw8s6A8H73LzL8tQWRz60fYqJGpDe3g&s",
-    use_column_width=True
-)
-    col1, col2 = st.columns([2,1])
+st.markdown(
+        "<div class='header'><div class='title'>🍪 CookieHub</div><div class='subtitle'>Gerencie receitas, vendas e relatórios</div></div>",
+        unsafe_allow_html=True
+    )
+
+    # imagem de capa
+    st.image(
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr6cuGw8s6A8H73LzL8tQWRz60fYqJGpDe3g&s",
+        use_column_width=True
+    )
+
+    col1, col2 = st.columns([2, 1])
     with col1:
         st.markdown("<div class='card fade-in'> <h3>O que você pode fazer</h3><ul><li>Cadastrar receitas</li><li>Registrar vendas</li><li>Editar/excluir receitas</li><li>Visualizar relatórios</li></ul></div>", unsafe_allow_html=True)
     with col2:
@@ -312,6 +318,7 @@ elif page == "Exportar / Backup":
 
 # ------------------ FOOTER ------------------
 st.markdown("<div class='small' style='text-align:center;margin-top:30px'>Feito com ❤️ por você</div>", unsafe_allow_html=True)
+
 
 
 
